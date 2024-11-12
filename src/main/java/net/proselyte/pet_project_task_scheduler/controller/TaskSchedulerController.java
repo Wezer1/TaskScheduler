@@ -5,10 +5,7 @@ import lombok.RequiredArgsConstructor;
 import net.proselyte.pet_project_task_scheduler.dto.TaskSchedulerDTO;
 import net.proselyte.pet_project_task_scheduler.service.TaskSchedulerService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,10 +24,18 @@ public class TaskSchedulerController {
     private final TaskSchedulerService taskSchedulerService;
 
     @GetMapping("/")
-    public ResponseEntity<List<TaskSchedulerDTO>> getTaskScheduler(){
+    public ResponseEntity<List<TaskSchedulerDTO>> getTasksScheduler(){
         return ResponseEntity.ok(taskSchedulerService.getAllTasksScheduler());
     }
 
+    @GetMapping("/{tasksSchedulerId}")
+    public ResponseEntity<TaskSchedulerDTO> getTaskScheduler(@PathVariable Integer tasksSchedulerId){
+        return  ResponseEntity.ok(taskSchedulerService.getTaskScheduler(tasksSchedulerId));
+    }
 
+    @PostMapping("/")
+    public ResponseEntity<TaskSchedulerDTO> addTaskSchedulerDTO(@RequestBody TaskSchedulerDTO taskSchedulerDTO){
+        return ResponseEntity.ok(taskSchedulerService.saveTaskScheduler(taskSchedulerDTO));
+    }
 
 }
